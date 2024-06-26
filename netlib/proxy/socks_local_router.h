@@ -81,10 +81,7 @@ namespace proxy
 			tcp_redirect_ = std::make_unique<ndisapi::tcp_local_redirect<net::ip_address_v4>>(log_printer_, log_level_);
 			udp_redirect_ = std::make_unique<ndisapi::socks5_udp_local_redirect<net::ip_address_v4>>(log_printer_, log_level_);
 
-			// Initialize packet filter
-			filter_ = std::make_unique<ndisapi::queued_packet_filter>(
-				nullptr,
-				[this](HANDLE, INTERMEDIATE_BUFFER& buffer)
+			auto callback= [this](HANDLE, INTERMEDIATE_BUFFER& buffer)
 				{
 					auto* const ethernet_header = reinterpret_cast<ether_header_ptr>(buffer.m_IBuffer);
 					const auto destination_mac = net::mac_address(ethernet_header->h_dest);
@@ -108,16 +105,16 @@ namespace proxy
 
 						auto process = iphelper::process_lookup<net::ip_address_v4>::get_process_helper().
 							lookup_process_for_udp<false>(net::ip_endpoint<net::ip_address_v4>{
-								ip_header->ip_src, ntohs(udp_header->th_sport)
-							});
+							ip_header->ip_src, ntohs(udp_header->th_sport)
+						});
 
 						if (!process)
 						{
 							iphelper::process_lookup<net::ip_address_v4>::get_process_helper().actualize(false, true);
 							process = iphelper::process_lookup<net::ip_address_v4>::get_process_helper().
 								lookup_process_for_udp<true>(net::ip_endpoint<net::ip_address_v4>{
-									ip_header->ip_src, ntohs(udp_header->th_sport)
-								});
+								ip_header->ip_src, ntohs(udp_header->th_sport)
+							});
 						}
 
 						if (const auto port = get_proxy_port_udp(process); port.has_value())
@@ -128,11 +125,11 @@ namespace proxy
 								udp_mapper_.insert(ntohs(udp_header->th_sport));
 
 								print_log(netlib::log::log_level::info,
-								          std::string("Redirecting UDP ") + std::string(
-									          net::ip_address_v4(ip_header->ip_src)) +
-								          " : " + std::to_string(ntohs(udp_header->th_sport)) + " -> " +
-								          std::string(net::ip_address_v4(ip_header->ip_dst)) + " : " + std::to_string(
-									          ntohs(udp_header->th_dport)));
+									std::string("Redirecting UDP ") + std::string(
+										net::ip_address_v4(ip_header->ip_src)) +
+									" : " + std::to_string(ntohs(udp_header->th_sport)) + " -> " +
+									std::string(net::ip_address_v4(ip_header->ip_dst)) + " : " + std::to_string(
+										ntohs(udp_header->th_dport)));
 							}
 
 							if (udp_redirect_->process_client_to_server_packet(buffer, htons(port.value())))
@@ -147,23 +144,23 @@ namespace proxy
 					else if (ip_header->ip_p == IPPROTO_TCP)
 					{
 						const auto* const tcp_header = reinterpret_cast<tcphdr_ptr>(reinterpret_cast<PUCHAR>(
-								ip_header) +
+							ip_header) +
 							sizeof(DWORD) * ip_header->ip_hl);
 
 						auto process = iphelper::process_lookup<net::ip_address_v4>::get_process_helper().
 							lookup_process_for_tcp<false>(net::ip_session<net::ip_address_v4>{
-								ip_header->ip_src, ip_header->ip_dst, ntohs(tcp_header->th_sport),
+							ip_header->ip_src, ip_header->ip_dst, ntohs(tcp_header->th_sport),
 								ntohs(tcp_header->th_dport)
-							});
+						});
 
 						if (!process)
 						{
 							iphelper::process_lookup<net::ip_address_v4>::get_process_helper().actualize(true, false);
 							process = iphelper::process_lookup<net::ip_address_v4>::get_process_helper().
 								lookup_process_for_tcp<true>(net::ip_session<net::ip_address_v4>{
-									ip_header->ip_src, ip_header->ip_dst, ntohs(tcp_header->th_sport),
+								ip_header->ip_src, ip_header->ip_dst, ntohs(tcp_header->th_sport),
 									ntohs(tcp_header->th_dport)
-								});
+							});
 						}
 
 						if (const auto port = get_proxy_port_tcp(process); port.has_value())
@@ -173,14 +170,14 @@ namespace proxy
 								std::lock_guard lock(tcp_mapper_lock_);
 								tcp_mapper_[ntohs(tcp_header->th_sport)] =
 									net::ip_endpoint(net::ip_address_v4(ip_header->ip_dst),
-									                 ntohs(tcp_header->th_dport));
+										ntohs(tcp_header->th_dport));
 
 								print_log(netlib::log::log_level::info,
-								          std::string("Redirecting TCP: ") + std::string(
-									          net::ip_address_v4(ip_header->ip_src)) +
-								          " : " + std::to_string(ntohs(tcp_header->th_sport)) + " -> " + std::string(
-									          net::ip_address_v4(ip_header->ip_dst)) +
-								          " : " + std::to_string(ntohs(tcp_header->th_dport)));
+									std::string("Redirecting TCP: ") + std::string(
+										net::ip_address_v4(ip_header->ip_src)) +
+									" : " + std::to_string(ntohs(tcp_header->th_sport)) + " -> " + std::string(
+										net::ip_address_v4(ip_header->ip_dst)) +
+									" : " + std::to_string(ntohs(tcp_header->th_dport)));
 							}
 
 							if (tcp_redirect_->process_client_to_server_packet(buffer, htons(port.value())))
@@ -194,7 +191,16 @@ namespace proxy
 					}
 
 					return ndisapi::queued_packet_filter::packet_action::pass;
-				});
+				};
+				try {
+					// Initialize packet filter
+					filter_ = std::make_unique<ndisapi::queued_packet_filter>(nullptr, callback);
+				}
+				catch(std::exception e){
+					::MessageBoxA(nullptr, e.what(), "Error", MB_OK | MB_ICONERROR);
+					exit(1);
+				}
+
 
 			// Set up ICMP filter to pass all ICMP traffic
 			ndisapi::filter<net::ip_address_v4> icmp_filter;

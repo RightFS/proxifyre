@@ -1,5 +1,4 @@
 #pragma once
-
 struct mutex_impl;
 
 namespace proxy
@@ -12,6 +11,7 @@ class socksify_unmanaged
 	explicit socksify_unmanaged(log_level_mx log_level);
 
 public:
+	static socksify_unmanaged* inst; // NOLINT(clang-diagnostic-exit-time-destructors)
 	~socksify_unmanaged();
 
 	socksify_unmanaged(const socksify_unmanaged& other) = delete;
@@ -43,7 +43,7 @@ private:
 	static void log_event(event_mx log);
 	void print_log(log_level_mx level, const std::string& message) const;
 
-	log_level_mx log_level_{log_level_mx::none};
+	log_level_mx log_level_{ log_level_mx::none };
 	std::string address_;
 	std::unique_ptr<proxy::socks_local_router> proxy_;
 	std::unique_ptr<mutex_impl> lock_;

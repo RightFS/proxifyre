@@ -1,0 +1,19 @@
+{
+  "logLevel": "Warning",
+  "proxies": [
+    {
+      "appNames": [ "chrome", "chrome_canary" ],
+      "socks5ProxyEndpoint": "158.101.205.51:1080",
+      "username": "username1",
+      "password": "password1",
+      "supportedProtocols": [ "TCP", "UDP" ]
+    },
+    {
+      "appNames": [ "firefox", "firefox_dev" ],
+      "socks5ProxyEndpoint": "159.101.205.52:1080",
+      "username": "username2",
+      "password": "password2",
+      "supportedProtocols": [ "TCP" ]
+    }
+  ]
+}

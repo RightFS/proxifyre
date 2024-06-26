@@ -4,8 +4,8 @@ class logger
 	static constexpr auto default_log_limit = 100;
 	log_storage_mx_t log_storage_;
 	std::mutex log_storage_lock_;
-	size_t log_limit_{default_log_limit};
-	HANDLE log_event_{nullptr};
+	size_t log_limit_{ default_log_limit };
+	HANDLE log_event_{ nullptr };
 
 	logger() = default;
 
@@ -24,8 +24,8 @@ public:
 		);
 
 		std::lock_guard<std::mutex> lock(log_storage_lock_);
-
-		log_storage_.emplace_back(ms.count(), log);
+		event_mx log_event{ ms.count(), event_type_mx::normal,0,log };
+		log_storage_.emplace_back(log_event);
 
 		if (log_event_ && log_storage_.size() > log_limit_)
 			::SetEvent(log_event_);
@@ -40,16 +40,16 @@ public:
 		case event_type_mx::address_error:
 		case event_type_mx::connected:
 		case event_type_mx::disconnected:
-			{
-				const auto ms = duration_cast<milliseconds>(
-					system_clock::now().time_since_epoch()
-				);
+		{
+			const auto ms = duration_cast<milliseconds>(
+				system_clock::now().time_since_epoch()
+			);
 
-				std::lock_guard<std::mutex> lock(log_storage_lock_);
+			std::lock_guard<std::mutex> lock(log_storage_lock_);
 
-				log_storage_.emplace_back(ms.count(), log_event);
-			}
-			break;
+			log_storage_.emplace_back(log_event);
+		}
+		break;
 		}
 
 		if (log_event_ && log_storage_.size() > log_limit_)

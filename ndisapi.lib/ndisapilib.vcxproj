@@ -130,6 +130,9 @@
     <OutDir>$(SolutionDir)bin\lib\$(Platform)\$(Configuration)\</OutDir>
     <TargetName>ndisapi</TargetName>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>

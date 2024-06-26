@@ -21,6 +21,7 @@ namespace ProxiFyre
 
         public void Start()
         {
+
             // Get the current executable path
             var executablePath = Assembly.GetExecutingAssembly().Location;
             var directoryPath = Path.GetDirectoryName(executablePath);

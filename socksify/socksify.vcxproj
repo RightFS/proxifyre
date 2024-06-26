@@ -29,7 +29,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{9B831C7D-AFF8-4E08-B9A2-198631645BB2}</ProjectGuid>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>wiresock</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -54,7 +54,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CLRSupport>true</CLRSupport>
+    <CLRSupport>false</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
@@ -113,7 +113,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\dll\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)bin\exe\$(Platform)\$(Configuration)\</OutDir>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
@@ -127,6 +127,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutDir>$(SolutionDir)bin\dll\$(Platform)\$(Configuration)\</OutDir>
     <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -155,7 +158,7 @@
       <ConformanceMode>false</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(SolutionDir)bin\lib\$(Platform)\$(Configuration)\ndisapi.lib;Iphlpapi.lib;ws2_32.lib;Advapi32.lib;Dnsapi.lib;</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)bin\lib\$(Platform)\$(Configuration)\ndisapi.lib;Iphlpapi.lib;ws2_32.lib;Advapi32.lib;Dnsapi.lib;user32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
@@ -262,17 +265,15 @@
     <ClInclude Include="..\netlib\winsys\event.h" />
     <ClInclude Include="..\netlib\winsys\io_completion_port.h" />
     <ClInclude Include="..\netlib\winsys\object.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="logger.h" />
-    <ClInclude Include="mixed_types.h" />
-    <ClInclude Include="Socksifier.h" />
     <ClInclude Include="socksify_unmanaged.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="unmanaged.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="Socksifier.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="pch.cpp" />
     <ClCompile Include="socksify_unmanaged.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
@@ -280,14 +281,6 @@
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</CompileAsManaged>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

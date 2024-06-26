@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\.net">
-      <UniqueIdentifier>{a6b06d6c-5a8d-4bc7-86a3-dddcf7b99ea5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\netlib">
       <UniqueIdentifier>{c9fae8d2-b328-49af-ac3a-f453ade8f3fb}</UniqueIdentifier>
     </Filter>
@@ -45,12 +42,6 @@
     </Filter>
     <Filter Include="Header Files\netlib\winsys">
       <UniqueIdentifier>{48ac607f-70ff-49fa-8f03-6a30aabf3e82}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\.net">
-      <UniqueIdentifier>{e945cb21-0a12-4cd5-b5b4-fbe503d3fdc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\native">
-      <UniqueIdentifier>{8d0a41c4-83ad-41d1-ad87-04c6303811bb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,26 +99,11 @@
     <ClInclude Include="..\netlib\pcap\pcap_file_storage.h">
       <Filter>Header Files\netlib\pcap</Filter>
     </ClInclude>
-    <ClInclude Include="unmanaged.h">
-      <Filter>Header Files\native</Filter>
-    </ClInclude>
     <ClInclude Include="socksify_unmanaged.h">
       <Filter>Header Files\native</Filter>
     </ClInclude>
-    <ClInclude Include="mixed_types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="logger.h">
       <Filter>Header Files\native</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Header Files\.net</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files\.net</Filter>
-    </ClInclude>
-    <ClInclude Include="Socksifier.h">
-      <Filter>Header Files\.net</Filter>
     </ClInclude>
     <ClInclude Include="..\netlib\proxy\socks_local_router.h">
       <Filter>Header Files\netlib\proxy</Filter>
@@ -159,20 +135,12 @@
     <ClInclude Include="..\netlib\ndisapi\static_filters.h">
       <Filter>Header Files\netlib\ndisapi</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="AssemblyInfo.cpp">
-      <Filter>Source Files\.net</Filter>
-    </ClCompile>
-    <ClCompile Include="Socksifier.cpp">
-      <Filter>Source Files\.net</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files\.net</Filter>
-    </ClCompile>
-    <ClCompile Include="socksify_unmanaged.cpp">
-      <Filter>Source Files\native</Filter>
-    </ClCompile>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
@@ -183,5 +151,16 @@
     <Image Include="app.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="socksify_unmanaged.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
