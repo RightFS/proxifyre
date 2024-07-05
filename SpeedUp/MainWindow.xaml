@@ -11,6 +11,11 @@
         BorderThickness="0"
         StateChanged="Window_StateChanged" Closing="Window_Closing"
         >
+    <Window.Resources>
+        <CroppedBitmap x:Key="RocketNormal" Source="pack://application:,,,/icons/whiteRocket.png" SourceRect="67,20,80,80"/>
+        <CroppedBitmap x:Key="RocketHover" Source="pack://application:,,,/icons/whiteRocket.png" SourceRect="67,20,80,80"/>
+        <CroppedBitmap x:Key="RocketActive" Source="pack://application:,,,/icons/whiteRocket.png" SourceRect="67,20,80,80"/>
+    </Window.Resources>
     <Grid Background="#10273b">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -24,26 +29,56 @@
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <TextBlock  Text="蛋疼" Margin="8 0 0 0" VerticalAlignment="Center" Foreground="#FAFAFA"/>
-            <TextBlock  Grid.Column="1" Text="Version 1.0" VerticalAlignment="Center"
-                                                  HorizontalAlignment="Right"  Foreground="#FAFAFA"/>
+
 
             <Button Margin="20 0 0 0" Grid.Column="2" BorderThickness="0" Background="#203959" Click="MinusButton_Click">
                 <Image Source="{StaticResource minus_DrawingImage}"/>
             </Button>
-            <Button x:Name="CloseButton" Grid.Column="3" Style="{StaticResource HoverAlert}" HorizontalAlignment="Right" Width="50" Click="CloseButton_Click" >
+            <Button x:Name="CloseButton" Grid.Column="3" Style="{StaticResource HoverAlert}" Tag="#FFF" HorizontalAlignment="Right" Width="50" Click="CloseButton_Click" >
                 <Image Source="{StaticResource close_DrawingImage}"/>
             </Button>
         </Grid>
-        <StackPanel Grid.Row="1">
-            <Button Height="100" Style="{StaticResource HoverAlert}">
-                <Image Source="{StaticResource close_DrawingImage}"/>
-            </Button>
-            <ContentControl Height="100">
-                <Image Source="{StaticResource close_DrawingImage}"/>
-            </ContentControl>
-            <Label Height="100">
-                <Image Source="{StaticResource close_DrawingImage}"/>
-            </Label>
-        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+           
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- 左对齐的按钮 -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button Width="60" Margin="5 5 0 0" Background="Transparent" BorderThickness="0">
+                        <Image Name="StartButtonImage" Width="60" Height="60" Source="{StaticResource RocketNormal}" >
+                        </Image>
+                    </Button>
+                    <Button Width="60" Margin="0 5 0 0" BorderThickness="0" Foreground="#FAFAFA" Background="Transparent">添加游戏</Button>
+                    <Button Width="60" Margin="0 5 0 0" BorderThickness="0" Foreground="#FAFAFA" Background="Transparent">删除游戏</Button>
+                </StackPanel>
+                <!-- 右对齐的按钮 -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Button Width="60" Margin="0 5 0 0" BorderThickness="0"  Foreground="#FAFAFA" Background="Transparent">节点选择</Button>
+                    <Button Width="60" Margin="0 5 0 0" BorderThickness="0" Foreground="#FAFAFA" Background="Transparent">账号管理</Button>
+                    <Button Width="60" Margin="0 5 5 0" BorderThickness="0" Foreground="#FAFAFA" Background="Transparent">联系客服</Button>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Frame x:Name="MainFrame" Source="Frames/SpeedUpPage.xaml"/>
+                <StatusBar VerticalAlignment="Bottom" Background="#10273b">
+                    <StatusBarItem Margin="5 0 0 2">
+                        <TextBlock Foreground="#FAFAFA" Text="就绪"/>
+                    </StatusBarItem>
+                    <StatusBarItem Margin="0 0 5 2" HorizontalAlignment="Right">
+                        <TextBlock  Grid.Column="1" Text="Version 1.0" VerticalAlignment="Center"
+                               HorizontalAlignment="Right"  Foreground="#FAFAFA"/>
+                    </StatusBarItem>
+                </StatusBar>
+            </Grid>
+        </Grid>
+        
     </Grid>
 </Window>

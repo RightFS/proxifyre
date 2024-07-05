@@ -36,7 +36,7 @@ namespace SpeedUp
 
                 Icon = LoadIconFromResource("SpeedUp.icons.icon.ico"), // 设置托盘图标的路径
                 Visible = false, // 初始时不显示
-                Text = "我的应用" // 鼠标悬停时的文本
+                Text = "双击打开界面" // 鼠标悬停时的文本
             };
 
             notifyIcon.MouseDoubleClick += NotifyIcon_MouseDoubleClick;
@@ -60,6 +60,7 @@ namespace SpeedUp
 
         private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("Minimize");
             this.WindowState = WindowState.Minimized;
         }
 
@@ -96,6 +97,12 @@ namespace SpeedUp
         {
             // 清理，避免托盘图标残留
             notifyIcon.Dispose();
+        }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Start");
+            MainFrame.Source = new Uri("Pages/StartPage.xaml", UriKind.Relative);
         }
     }
 }
