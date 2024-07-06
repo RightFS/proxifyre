@@ -5,61 +5,89 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpeedUp"
         mc:Ignorable="d"
-        Title="蛋疼加速器" Height="450" Width="600"
+        Title="蛋疼加速器" Height="484" Width="594"
         ResizeMode="NoResize" 
         WindowStyle="None"
-        BorderThickness="0"
+        BorderThickness="3"
         StateChanged="Window_StateChanged" Closing="Window_Closing"
         >
+    <Window.BorderBrush>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#fff" Offset="0"/>
+            <GradientStop Color="#888" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.BorderBrush>
     <Window.Resources>
         <CroppedBitmap x:Key="RocketNormal" Source="pack://application:,,,/icons/whiteRocket.png" SourceRect="67,20,80,80"/>
         <CroppedBitmap x:Key="RocketHover" Source="pack://application:,,,/icons/whiteRocket.png" SourceRect="67,20,80,80"/>
         <CroppedBitmap x:Key="RocketActive" Source="pack://application:,,,/icons/whiteRocket.png" SourceRect="67,20,80,80"/>
     </Window.Resources>
-    <Grid Background="#10273b">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.37">
+                <GradientStop Color="#cf4709" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="#203959" Height="30" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+        <Grid Grid.Row="0"  Height="30" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
-            <TextBlock  Text="蛋疼" Margin="8 0 0 0" VerticalAlignment="Center" Foreground="#FAFAFA"/>
-
-
-            <Button Margin="20 0 0 0" Grid.Column="2" BorderThickness="0" Background="#203959" Click="MinusButton_Click">
+            <TextBlock  Text="传奇代理 专用版" Margin="8 0 0 0" VerticalAlignment="Center" Foreground="#060606"/>
+            <Button Margin="20 0 0 0" Grid.Column="2" BorderThickness="0" Background="Transparent" Click="MinusButton_Click">
                 <Image Source="{StaticResource minus_DrawingImage}"/>
             </Button>
-            <Button x:Name="CloseButton" Grid.Column="3" Style="{StaticResource HoverAlert}" Tag="#FFF" HorizontalAlignment="Right" Width="50" Click="CloseButton_Click" >
+            <Button x:Name="CloseButton" Grid.Column="3" Style="{StaticResource HoverAlert}" HorizontalAlignment="Right" Width="50" Click="CloseButton_Click" >
                 <Image Source="{StaticResource close_DrawingImage}"/>
             </Button>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="78"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-           
-            <Grid Grid.Row="0">
+            <Image Grid.Row="0" Height="56" Source="pack://application:,,,/icons/buttons.png" Stretch="Fill" Margin="0 -22 0 0"/>
+            <Grid Grid.Row="0" Margin="0 -1 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <!-- 左对齐的按钮 -->
+
+                <!--左对齐的按钮-->
+
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <Button Width="60" Margin="5 5 0 0" Background="Transparent" BorderThickness="0">
-                        <Image Name="StartButtonImage" Width="60" Height="60" Source="{StaticResource RocketNormal}" >
-                        </Image>
+                    <Button  Width="62" Height="73"  Margin="8 0 0 5" Background="Transparent" Style="{StaticResource HoverNormal}">
+                        <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center" Background="Transparent">
+                            <Label x:Name="SwitchButton" VerticalAlignment="Bottom" Foreground="#060606">开始加速</Label>
+                        </Grid>
                     </Button>
-                    <Button Width="60" Margin="0 5 0 0" BorderThickness="0" Foreground="#FAFAFA" Background="Transparent">添加游戏</Button>
-                    <Button Width="60" Margin="0 5 0 0" BorderThickness="0" Foreground="#FAFAFA" Background="Transparent">删除游戏</Button>
+                    <Button  Width="62" Height="73"  Margin="6 0 0 5"  Background="Transparent" Style="{StaticResource HoverNormal}">
+                        <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center">
+                            <Label x:Name="SwitchButton2" VerticalAlignment="Bottom"  Foreground="#060606">添加游戏</Label>
+                        </Grid>
+                    </Button>
+                    <Button  Width="62" Height="73"  Margin="7 0 0 5" Background="Transparent" Style="{StaticResource HoverNormal}">
+                        <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center" >
+                            <Label x:Name="SwitchButton3" VerticalAlignment="Bottom" Foreground="#060606">删除游戏</Label>
+                        </Grid>
+                    </Button>
+                    <Button  Width="62" Height="73"  Margin="10 0 0 5"  Background="Transparent" Style="{StaticResource HoverNormal}">
+                        <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center">
+                            <Label x:Name="SwitchButton5" VerticalAlignment="Bottom"  Foreground="#060606">运行游戏</Label>
+                        </Grid>
+                    </Button>
                 </StackPanel>
-                <!-- 右对齐的按钮 -->
+
+                <!--右对齐的按钮-->
+
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <Button Width="60" Margin="0 5 0 0" BorderThickness="0"  Foreground="#FAFAFA" Background="Transparent">节点选择</Button>
                     <Button Width="60" Margin="0 5 0 0" BorderThickness="0" Foreground="#FAFAFA" Background="Transparent">账号管理</Button>
@@ -68,17 +96,20 @@
             </Grid>
             <Grid Grid.Row="1">
                 <Frame x:Name="MainFrame" Source="Frames/SpeedUpPage.xaml"/>
-                <StatusBar VerticalAlignment="Bottom" Background="#10273b">
-                    <StatusBarItem Margin="5 0 0 2">
+                <StatusBar VerticalAlignment="Bottom" Background="Transparent">
+                    <!--<StatusBarItem Margin="5 0 0 2">
                         <TextBlock Foreground="#FAFAFA" Text="就绪"/>
+                    </StatusBarItem>-->
+                    <StatusBarItem HorizontalAlignment="Center">
+                        <TextBlock Foreground="#060606" Text="传奇代理 专用版  账号到期时间 2099-09-09"/>
                     </StatusBarItem>
-                    <StatusBarItem Margin="0 0 5 2" HorizontalAlignment="Right">
+                    <!--<StatusBarItem Margin="0 0 5 2" HorizontalAlignment="Right">
                         <TextBlock  Grid.Column="1" Text="Version 1.0" VerticalAlignment="Center"
                                HorizontalAlignment="Right"  Foreground="#FAFAFA"/>
-                    </StatusBarItem>
+                    </StatusBarItem>-->
                 </StatusBar>
             </Grid>
         </Grid>
-        
+
     </Grid>
 </Window>

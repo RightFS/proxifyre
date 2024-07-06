@@ -8,23 +8,23 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="icons/icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <local:ResourceKeyToImageBrushConverter x:Key="ResourceKeyToImageBrushConverter"/>
-            <local:StringToBrushConverter x:Key="StringToBrushConverter"/>
             <Style x:Key="HoverNormal" TargetType="Button">
-                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="BorderThickness" Value="0"/>
                 <!-- 默认背景颜色 -->
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Border Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}">
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <!-- 鼠标悬停时的背景颜色 -->
-                                    <Setter Property="Background" Value="SkyBlue"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Setter Property="Foreground" Value="SkyBlue"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -32,7 +32,7 @@
                 </Setter>
             </Style>
             <Style x:Key="HoverAlert" TargetType="Button">
-                <Setter Property="Background" Value="#203959"/>
+                <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -43,41 +43,6 @@
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="Red"/>
                                     <!--<Setter Property="Background" Value="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringToBrushConverter}}"/>-->
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            
-            <!-- 通用图片按钮样式 -->
-            <Style x:Key="ImageButtonStyle" TargetType="Button">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <!-- 正常状态 -->
-                                <Trigger Property="IsMouseOver" Value="False">
-                                    <Setter Property="Background" 
-                                            Value="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ResourceKeyToImageBrushConverter},ConverterParameter='-normal' }"/>
-                                </Trigger>
-                                <!-- 悬停状态 -->
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background"
-                                            Value="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ResourceKeyToImageBrushConverter},ConverterParameter='-hover'}"/>
-                                </Trigger>
-                                <!-- 点击状态 -->
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Background"
-                                            Value="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ResourceKeyToImageBrushConverter},ConverterParameter='-press'}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
