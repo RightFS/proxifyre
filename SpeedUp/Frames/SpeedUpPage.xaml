@@ -7,8 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SpeedUpPage"
-      AllowDrop="True" DragEnter="Page_DragEnter" Drop="Page_Drop">
-    <Grid>
+      >
+    <Grid Margin="10" AllowDrop="True" DragEnter="Page_DragEnter" Drop="Page_Drop">
         <Grid.Triggers>
             <EventTrigger RoutedEvent="Grid.Loaded">
                 <BeginStoryboard>
@@ -20,5 +20,31 @@
                 </BeginStoryboard>
             </EventTrigger>
         </Grid.Triggers>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Height="80" Grid.Row="0" Grid.Column="0" AllowDrop="True">
+            <StackPanel Orientation="Vertical"  AllowDrop="True">
+                <TextBlock Text="加速流量" FontSize="12" Foreground="Black" Margin="10 20 0 0"/>
+                <TextBlock Text="性能指标" FontSize="12" Foreground="Black" Margin="10 10 0 0"/>
+            </StackPanel>
+        </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="0" Margin="10 0"  AllowDrop="True">
+            <WrapPanel x:Name="IconWrapPanel" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        </ScrollViewer>
+        <Grid Grid.Row="0" Grid.Column="1" AllowDrop="True" Width="150" Height="Auto" Background="Transparent">
+            <StackPanel Orientation="Vertical"  AllowDrop="True">
+                <TextBlock Text="节点信息" FontSize="12" Foreground="Black" Margin="10 20 0 0"/>
+                <TextBlock Text="性能指标" FontSize="12" Foreground="Black" Margin="10 10 0 0"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1" AllowDrop="True" Width="150" Height="Auto" Background="Transparent">
+            
+        </Grid>
     </Grid>
 </Page>

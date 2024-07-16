@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SpeedUp
 {
@@ -26,6 +27,25 @@ namespace SpeedUp
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public void ShowToast(string message)
+        {
+            var duration = TimeSpan.FromSeconds(1.5);
+            ToastText.Text = message;
+            ToastPopup.IsOpen = true;
+
+            DispatcherTimer timer = new DispatcherTimer
+            {
+                Interval = duration
+            };
+            timer.Tick += (s, args) =>
+            {
+                ToastPopup.IsOpen = false;
+                timer.Stop();
+            };
+            timer.Start();
+        }
+
         private NotifyIcon notifyIcon;
         public MainWindow()
         {
@@ -101,8 +121,63 @@ namespace SpeedUp
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
+            if(GlobalData.FilePaths.Count == 0)
+            {
+                ShowToast("请添加应用程序");
+                return;
+            }
+            GlobalData.IsRunning = !GlobalData.IsRunning;
             Console.WriteLine("Start");
-            MainFrame.Source = new Uri("Pages/StartPage.xaml", UriKind.Relative);
+            SwitchButton.Content= GlobalData.IsRunning ? "停止加速" : "开始加速";
+        }
+
+        private void AddApplicationButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (GlobalData.IsRunning)
+            {
+                ShowToast("请先停止加速");
+                return;
+            }
+            //打开文件选择器
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "可执行文件|*.exe|快捷方式|*.lnk",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                foreach (string file in openFileDialog.FileNames)
+                {
+                    if(MainFrame.Content is Frames.SpeedUpPage speedUpPage)
+                    {
+                        if (!speedUpPage.AddApplication(file))
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RemoveApplicationButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(GlobalData.IsRunning)
+            {
+                ShowToast("请先停止加速");
+                return;
+            }
+            if (MainFrame.Content is Frames.SpeedUpPage speedUpPage)
+            {
+                speedUpPage.RemoveSelectedApplication();
+            }
+        }
+
+        private void RunApplicationButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.Content is Frames.SpeedUpPage speedUpPage)
+            {
+                speedUpPage.RunSelectedApplication();
+            }
         }
     }
 }

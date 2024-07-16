@@ -18,23 +18,32 @@ namespace SpeedUp
         public string ServerPath { get; set; }
     }
 
+    internal static class GlobalData
+    {
+        public static List<string> FilePaths { get; set; } = new List<string>();
+        public static List<ServerInfo> ServerInfos { get; set; } = new List<ServerInfo>();
+        public static volatile bool IsRunning = false;
+        public static string CurrentPage { get; set; } = "SpeedUpPage";
+    }
+
     internal class SharedData : INotifyPropertyChanged
     {
         public List<string> FilePaths { get; set; }
 
+        public List<ServerInfo> ServerInfos { get; set; }
         public void AddFilePathsItem(string path)
         {
             FilePaths.Add(path);
             OnPropertyChanged(nameof(FilePaths));
         }
 
-        public void RemoveFilePathsItem(string path)
+        public void RemoveFilePathItem(string path)
         {
             FilePaths.Remove(path);
             OnPropertyChanged(nameof(FilePaths));
         }
 
-        public string RemoveFilePathsItem(int index)
+        public string RemoveFilePathItem(int index)
         {
             string path = FilePaths[index];
             FilePaths.RemoveAt(index);

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace SpeedUp
 {
     internal class Utils
     {
-        public string GetShortcutTarget(string shortcutPath)
+        public static string GetShortcutTarget(string shortcutPath)
         {
             if (System.IO.File.Exists(shortcutPath))
             {
@@ -21,6 +22,24 @@ namespace SpeedUp
                 return shortcut.TargetPath;
             }
             return null;
+        }
+
+        public static string ComputeMd5Hash(string rawData)
+        {
+            // 创建一个 MD5   
+            using (MD5 md5Hash = MD5.Create())
+            {
+                // 计算字符串的哈希值   
+                byte[] bytes = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                // 将字节数组转换为十六进制字符串   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpeedUp"
         mc:Ignorable="d"
-        Title="蛋疼加速器" Height="484" Width="594"
+        Title="66加速器" Height="484" Width="594"
         ResizeMode="NoResize" 
         WindowStyle="None"
         BorderThickness="3"
@@ -36,15 +36,14 @@
         <Grid Grid.Row="0"  Height="30" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <TextBlock  Text="传奇代理 专用版" Margin="8 0 0 0" VerticalAlignment="Center" Foreground="#060606"/>
-            <Button Margin="20 0 0 0" Grid.Column="2" BorderThickness="0" Background="Transparent" Click="MinusButton_Click">
+            <Button Margin="20 0 0 0" Grid.Column="1" BorderThickness="0" Background="Transparent" Click="MinusButton_Click">
                 <Image Source="{StaticResource minus_DrawingImage}"/>
             </Button>
-            <Button x:Name="CloseButton" Grid.Column="3" Style="{StaticResource HoverAlert}" HorizontalAlignment="Right" Width="50" Click="CloseButton_Click" >
+            <Button x:Name="CloseButton" Grid.Column="2" Style="{StaticResource HoverAlert}" HorizontalAlignment="Right" Width="50" Click="CloseButton_Click" >
                 <Image Source="{StaticResource close_DrawingImage}"/>
             </Button>
         </Grid>
@@ -64,22 +63,22 @@
                 <!--左对齐的按钮-->
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <Button  Width="62" Height="73"  Margin="8 0 0 5" Background="Transparent" Style="{StaticResource HoverNormal}">
+                    <Button  Width="62" Height="73"  Margin="8 0 0 5" Background="Transparent" Style="{StaticResource HoverNormal}" Click="StartButton_Click">
                         <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center" Background="Transparent">
                             <Label x:Name="SwitchButton" VerticalAlignment="Bottom" Foreground="#060606">开始加速</Label>
                         </Grid>
                     </Button>
-                    <Button  Width="62" Height="73"  Margin="6 0 0 5"  Background="Transparent" Style="{StaticResource HoverNormal}">
+                    <Button  Width="62" Height="73"  Margin="6 0 0 5"  Background="Transparent" Style="{StaticResource HoverNormal}" Click="AddApplicationButton_Click">
                         <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center">
                             <Label x:Name="SwitchButton2" VerticalAlignment="Bottom"  Foreground="#060606">添加游戏</Label>
                         </Grid>
                     </Button>
-                    <Button  Width="62" Height="73"  Margin="7 0 0 5" Background="Transparent" Style="{StaticResource HoverNormal}">
+                    <Button  Width="62" Height="73"  Margin="7 0 0 5" Background="Transparent" Style="{StaticResource HoverNormal}" Click="RemoveApplicationButton_Click">
                         <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center" >
                             <Label x:Name="SwitchButton3" VerticalAlignment="Bottom" Foreground="#060606">删除游戏</Label>
                         </Grid>
                     </Button>
-                    <Button  Width="62" Height="73"  Margin="10 0 0 5"  Background="Transparent" Style="{StaticResource HoverNormal}">
+                    <Button  Width="62" Height="73"  Margin="10 0 0 5"  Background="Transparent" Style="{StaticResource HoverNormal}" Click="RunApplicationButton_Click">
                         <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center">
                             <Label x:Name="SwitchButton5" VerticalAlignment="Bottom"  Foreground="#060606">运行游戏</Label>
                         </Grid>
@@ -88,10 +87,22 @@
 
                 <!--右对齐的按钮-->
 
-                <StackPanel Grid.Column="2" Orientation="Horizontal">
-                    <Button Width="60" Margin="0 5 0 0" BorderThickness="0"  Foreground="#FAFAFA" Background="Transparent">节点选择</Button>
-                    <Button Width="60" Margin="0 5 0 0" BorderThickness="0" Foreground="#FAFAFA" Background="Transparent">账号管理</Button>
-                    <Button Width="60" Margin="0 5 5 0" BorderThickness="0" Foreground="#FAFAFA" Background="Transparent">联系客服</Button>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="0 0 3 0">
+                    <Button  Width="62" Height="73"  Margin="8 0 0 5" Background="Transparent" Style="{StaticResource HoverNormal}">
+                        <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center" Background="Transparent">
+                            <Label VerticalAlignment="Bottom" Foreground="#060606">节点选择</Label>
+                        </Grid>
+                    </Button>
+                    <Button  Width="62" Height="73"  Margin="6 0 0 5"  HorizontalAlignment="Center" Background="Transparent" Style="{StaticResource HoverNormal}">
+                        <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center">
+                            <Label VerticalAlignment="Bottom"  Foreground="#060606">账号管理</Label>
+                        </Grid>
+                    </Button>
+                    <Button  Width="62" Height="73"  Margin="7 0 0 5" Background="Transparent" Style="{StaticResource HoverNormal}">
+                        <Grid Width="62" Height="73" Margin="0" HorizontalAlignment="Center" >
+                            <Label VerticalAlignment="Bottom" Foreground="#060606">联系客服</Label>
+                        </Grid>
+                    </Button>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
@@ -110,6 +121,11 @@
                 </StatusBar>
             </Grid>
         </Grid>
-
+        <Popup x:Name="ToastPopup" Placement="Center" StaysOpen="False" AllowsTransparency="True">
+            <Border Background="Black" CornerRadius="10" Padding="10" Opacity="0.8">
+                <TextBlock x:Name="ToastText" Foreground="White" FontSize="14"/>
+            </Border>
+        </Popup>
     </Grid>
+    
 </Window>
